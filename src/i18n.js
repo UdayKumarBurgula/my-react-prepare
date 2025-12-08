@@ -17,7 +17,8 @@ i18n
 
     // Declare namespaces
     // ✅ include all namespaces
-    ns: ["common", "myTranslation", "home", "about"],
+    // Only preload "common" eagerly
+    ns: ["common"],
     defaultNS: "common",
 
     backend: {
@@ -31,6 +32,11 @@ i18n
 
     interpolation: {
       escapeValue: false
+    },
+
+    // IMPORTANT: let react-i18next use Suspense for lazy ns loading
+    react: {
+      useSuspense: true
     },
 
     debug: false

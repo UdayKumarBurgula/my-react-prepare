@@ -1,6 +1,6 @@
 // src/App.js
-import React, { useState } from "react";
-import { BrowserRouter, Routes, Route, Link, NavLink } from "react-router-dom";
+import React, { Suspense, useState } from "react";
+import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import LanguageSwitcher from "./LanguageSwitcher";
@@ -9,7 +9,8 @@ import AboutPage from "./pages/AboutPage";
 import MyFeature from "./MyFeature";
 
 function App() {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("common"); 
+  // "common" is preloaded
   const [count, setCount] = useState(0);
 
   return (
@@ -46,15 +47,22 @@ function App() {
         </button>
 
         {/* Show Feature section (myTranslation namespace) */}
-        <MyFeature />
+        {/* myTranslation is lazy too */}
+        <Suspense fallback={<p>Loading feature translations…</p>}>
+          <MyFeature />
+        </Suspense>
 
         <hr style={{ margin: "24px 0" }} />
 
         {/* Router outlet area */}
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
-        </Routes>
+
+        {/* Wrap routed pages with Suspense for lazy namespaces */}
+        <Suspense fallback={<p>Loading page…</p>}>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<AboutPage />} />
+          </Routes>
+        </Suspense>
       </div>
     </BrowserRouter>
   );

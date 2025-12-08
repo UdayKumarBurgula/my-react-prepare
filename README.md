@@ -85,5 +85,6 @@ We’ll keep your existing common.json and myTranslation.json, and add home.json a
 Update src/i18n.js to include page namespaces, Add "home" and "about" to your ns and keep common as defaultNS.
 src/App.js – combine Router + i18next + pages
 
+Lazy loading namespaces per route (e.g., only load about namespace when visiting /about)
 
 
