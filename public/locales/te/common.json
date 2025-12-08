@@ -1,0 +1,13 @@
+﻿{
+  "appTitle": "మల్టీ లాంగ్వేజ్ యాప్",
+  "welcome": "స్వాగతం, {{name}}!",
+  "description": "ఈ యాప్ i18next తో namespaces మరియు బహుభాషా మద్దతు చూపిస్తుంది.",
+  "changeLanguage": "భాష మార్చండి",
+  "lang": {
+    "en": "ఇంగ్లీష్",
+    "hi": "హిందీ",
+    "te": "తెలుగు"
+  },
+  "counterLabel": "మీరు {{count}} సారి క్లిక్ చేశారు",
+  "counterLabel_plural": "మీరు {{count}} సార్లు క్లిక్ చేశారు"
+}

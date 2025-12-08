@@ -1,0 +1,13 @@
+﻿{
+  "appTitle": "मल्टी-भाषा ऐप",
+  "welcome": "स्वागत है, {{name}}!",
+  "description": "यह ऐप i18next के साथ namespaces और multi-language support दिखाता है।",
+  "changeLanguage": "भाषा बदलें",
+  "lang": {
+    "en": "अंग्रेज़ी",
+    "hi": "हिन्दी",
+    "te": "तेलुगु"
+  },
+  "counterLabel": "आपने {{count}} बार क्लिक किया",
+  "counterLabel_plural": "आपने {{count}} बार क्लिक किया"
+}

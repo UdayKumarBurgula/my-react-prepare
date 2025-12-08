@@ -9,32 +9,33 @@ const LANGS = [
 ];
 
 function LanguageSwitcher() {
-  const { i18n, t } = useTranslation();
+  // explicitly use "common" namespace (optional, since it's defaultNS)
+  const { i18n, t } = useTranslation("common");
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
-    document.documentElement.lang = lng; // good for accessibility/SEO
+    document.documentElement.lang = lng;
   };
 
   return (
-    <div style={{ display: "flex", gap: "8px", marginBottom: "16px" }}>
+    <div style={{ display: "flex", gap: 8, marginBottom: 16 }}>
       <span>{t("changeLanguage")}:</span>
-      {LANGS.map((lng) => (
+      {LANGS.map((lang) => (
         <button
-          key={lng.code}
-          onClick={() => changeLanguage(lng.code)}
+          key={lang.code}
+          onClick={() => changeLanguage(lang.code)}
           style={{
             padding: "4px 10px",
             borderRadius: 8,
             border:
-              i18n.resolvedLanguage?.startsWith(lng.code)
-                ? "2px solid black"
-                : "1px solid #ccc",
+              i18n.resolvedLanguage?.startsWith(lang.code) ?
+                "2px solid black" :
+                "1px solid #ccc",
             background: "white",
             cursor: "pointer"
           }}
         >
-          {t(lng.labelKey)}
+          {t(lang.labelKey)}
         </button>
       ))}
     </div>

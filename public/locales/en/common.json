@@ -1,0 +1,13 @@
+{
+  "appTitle": "My Multi-language App",
+  "welcome": "Welcome, {{name}}!",
+  "description": "This app demonstrates i18next with namespaces and multiple languages.",
+  "changeLanguage": "Change language",
+  "lang": {
+    "en": "English",
+    "hi": "Hindi",
+    "te": "Telugu"
+  },
+  "counterLabel": "You clicked {{count}} time",
+  "counterLabel_plural": "You clicked {{count}} times"
+}
