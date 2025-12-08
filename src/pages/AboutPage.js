@@ -6,7 +6,7 @@ function AboutPage() {
   // ✅ Use about namespace + fallback to "common"
   const { t } = useTranslation(["about", "common"]);
 
-  const [count, setCount] = useState(0);
+  const [isOn, setIsOn] = useState(false);
 
   return (
     <div>
@@ -14,12 +14,10 @@ function AboutPage() {
       <p>{t("content")}</p>
       <p>{t("more")}</p>
 
-      <h2> Counter from About Page </h2>
+      <h2> Implement a Toggle Switch from About Page </h2>
 
-      <p> {count}</p>
-
-      <button onClick={() => setCount(count+1)} >Increment</button>
-      <button onClick={() => setCount(count-1)}>Decrement</button>
+      <button onClick={() => setIsOn(!isOn)} >{isOn ? 'On' : 'Off'}</button>
+     
     </div>
   );
 }
