@@ -1,31 +1,62 @@
 // src/App.js
 import React, { useState } from "react";
+import { BrowserRouter, Routes, Route, Link, NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+
 import LanguageSwitcher from "./LanguageSwitcher";
+import HomePage from "./pages/HomePage";
+import AboutPage from "./pages/AboutPage";
 import MyFeature from "./MyFeature";
 
 function App() {
-  // "common" namespace by default
   const { t } = useTranslation("common");
   const [count, setCount] = useState(0);
 
   return (
-    <div style={{ fontFamily: "system-ui", padding: 24, maxWidth: 700 }}>
-      <h1>{t("appTitle")}</h1>
+    <BrowserRouter>
+      <div style={{ fontFamily: "system-ui", padding: 24, maxWidth: 800 }}>
+        <h1>{t("appTitle")}</h1>
 
-      <LanguageSwitcher />
+        <LanguageSwitcher />
 
-      <h2>{t("welcome", { name: "Developer" })}</h2>
-      <p>{t("description")}</p>
+        {/* Simple navigation */}
+        <nav style={{ marginBottom: 16, display: "flex", gap: 12 }}>
+          <NavLink
+            to="/"
+            end
+            style={({ isActive }) => ({
+              textDecoration: isActive ? "underline" : "none"
+            })}
+          >
+            Home
+          </NavLink>
+          <NavLink
+            to="/about"
+            style={({ isActive }) => ({
+              textDecoration: isActive ? "underline" : "none"
+            })}
+          >
+            About
+          </NavLink>
+        </nav>
 
-      <button onClick={() => setCount((c) => c + 1)} style={{ marginTop: 12 }}>
-        {t("counterLabel", { count })}
-      </button>
+        {/* Counter still uses common.json */}
+        <button onClick={() => setCount((c) => c + 1)} style={{ marginBottom: 16 }}>
+          {t("counterLabel", { count })}
+        </button>
 
-      <hr style={{ margin: "24px 0" }} />
+        {/* Show Feature section (myTranslation namespace) */}
+        <MyFeature />
 
-      <MyFeature />
-    </div>
+        <hr style={{ margin: "24px 0" }} />
+
+        {/* Router outlet area */}
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 

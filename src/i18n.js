@@ -16,7 +16,8 @@ i18n
     supportedLngs: ["en", "hi", "te"],
 
     // Declare namespaces
-    ns: ["common", "myTranslation"],
+    // ✅ include all namespaces
+    ns: ["common", "myTranslation", "home", "about"],
     defaultNS: "common",
 
     backend: {
