@@ -6,7 +6,7 @@ function AboutPage() {
   // ✅ Use about namespace + fallback to "common"
   const { t } = useTranslation(["about", "common"]);
 
-  // todos list implementation
+  // Fetch Data from an API implementation
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
