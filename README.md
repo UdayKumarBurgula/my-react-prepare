@@ -70,9 +70,15 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
 
-commands
+### commands
 npx create-react-app my-react-prepare
 cd my-react-prepare
 npm start
 Open http://localhost:3000 to view it in the browser.
+
+npm install i18next react-i18next i18next-browser-languagedetector --legacy-peer-deps
+npm i i18next-http-backend --legacy-peer-deps
+
+
+
 
