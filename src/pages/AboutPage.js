@@ -2,24 +2,38 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
+
+// Create a Search Bar
+const SearchBar = ({ items }) => {
+  const [query, setQuery] = useState('');
+
+  const filteredItems = items.filter(item =>
+    item.toLowerCase().includes(query.toLowerCase())
+  );
+
+  return (
+    <div>
+      <input
+        type="text"
+        value={query}
+        onChange={e => setQuery(e.target.value)}
+        placeholder="Search..."
+      />
+      <ul>
+        {filteredItems.map((item, index) => (
+          <li key={index}>{item}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+
 function AboutPage() {
   // ✅ Use about namespace + fallback to "common"
   const { t } = useTranslation(["about", "common"]);
 
-  // Fetch Data from an API implementation
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/posts")
-      .then(response => response.json())
-      .then(data => {
-        setData(data);
-        setLoading(false);
-      });
-  }, []);
-
-  if (loading) return <p>Loading...</p>;
+  const items = ['Apple', 'Banana', 'Cherry', 'Date', 'Elderberry'];
 
   return (
     <div>
@@ -27,15 +41,8 @@ function AboutPage() {
       <p>{t("content")}</p>
       <p>{t("more")}</p>
 
-      <h2> Fetch Data from an API from About Page </h2>
-
-      <ul>
-      {
-          data.map(item => (
-            <li key={item.id}>{item.title}</li>
-        ))}
-      </ul>
-      
+      <h3>Create a Search Bar</h3>
+      <SearchBar items={items} />
      
     </div>
   );
