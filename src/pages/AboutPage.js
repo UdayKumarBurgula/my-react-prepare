@@ -36,6 +36,7 @@ function AboutPage() {
   
   return (
       <div>
+          <h3>Create a Modal Component</h3>
           <button onClick={() => setIsModalOpen(true)}>Open Modal</button>
           <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
               <h1>Modal Content</h1>
