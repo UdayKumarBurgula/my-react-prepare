@@ -1,27 +1,28 @@
 ﻿// src/pages/AboutPage.js
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import ReactDOM from 'react-dom';
 
-const Tabs = ({ tabs }) => {
-    const [activeTab, setActiveTab] = useState(0);
+const Modal = ({ isOpen, onClose, children }) => {
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+    }, [isOpen]);
 
-    return (
-        <div>
-            <div className="tab-buttons">
-                {tabs.map((tab, index) => (
-                    <button
-                        key={index}
-                        className={index === activeTab ? 'active' : ''}
-                        onClick={() => setActiveTab(index)}
-                    >
-                        {tab.label}
-                    </button>
-                ))}
+    if (!isOpen) return null;
+
+    return ReactDOM.createPortal(
+        <div className="modal-overlay" onClick={onClose}>
+
+            <div className="modal-content" onClick={e => e.stopPropagation()}>
+                <button className="modal-close" onClick={onClose}>Close</button>
+                {children}
             </div>
-            <div className="tab-content">
-                {tabs[activeTab].content}
-            </div>
-        </div>
+        </div>,
+        document.body
     );
 };
 
@@ -31,23 +32,16 @@ function AboutPage() {
   // ✅ Use about namespace + fallback to "common"
   const { t } = useTranslation(["about", "common"]);
 
-    const tabs = [
-        { label: 'Tab 1', content: <div>Content of Tab 1</div> },
-        { label: 'Tab 2', content: <div>Content of Tab 2</div> },
-        { label: 'Tab 3', content: <div>Content of Tab 3</div> },
-    ];
+    const [isModalOpen, setIsModalOpen] = useState(false);
   
   return (
-    <div>
-      <h2>{t("title")}</h2>
-      <p>{t("content")}</p>
-      <p>{t("more")}</p>
-
-          <h3>Implement a Tabs Component</h3>
-      
-          <Tabs tabs={tabs} />
-           
-    </div>
+      <div>
+          <button onClick={() => setIsModalOpen(true)}>Open Modal</button>
+          <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+              <h1>Modal Content</h1>
+              <p>This is the content inside the modal</p>
+          </Modal>
+      </div>
   );
 }
 
