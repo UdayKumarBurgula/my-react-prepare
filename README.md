@@ -81,9 +81,11 @@ npm i i18next-http-backend --legacy-peer-deps
 
 npm install react-router-dom --legacy-peer-deps
 Add new translation JSON files per page
-We’ll keep your existing common.json and myTranslation.json, and add home.json and about.json for each language.
-Update src/i18n.js to include page namespaces, Add "home" and "about" to your ns and keep common as defaultNS.
-src/App.js – combine Router + i18next + pages
+Weâ€™ll keep your existing common.json and myTranslation.json, 
+and add home.json and about.json for each language.
+Update src/i18n.js to include page namespaces, 
+Add "home" and "about" to your ns and keep common as defaultNS.
+src/App.js â€“ combine Router + i18next + pages
 
 Lazy loading namespaces per route (e.g., only load about namespace when visiting /about)
 
