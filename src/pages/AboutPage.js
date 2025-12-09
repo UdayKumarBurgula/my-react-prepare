@@ -2,25 +2,27 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
-const DropdownMenu = ({ items }) => {
-    const [isOpen, setIsOpen] = useState(false);
+const Tabs = ({ tabs }) => {
+    const [activeTab, setActiveTab] = useState(0);
 
     return (
         <div>
-            <button onClick={() => setIsOpen(!isOpen)} >Toggle Menu</button>
-            {isOpen && ( 
-                <ul>
-                    {
-                        items.map((item, index) => (
-                        <li key={index}>{item}</li>
-                            ))
-                    }
-                </ul>
-            )}
-
+            <div className="tab-buttons">
+                {tabs.map((tab, index) => (
+                    <button
+                        key={index}
+                        className={index === activeTab ? 'active' : ''}
+                        onClick={() => setActiveTab(index)}
+                    >
+                        {tab.label}
+                    </button>
+                ))}
+            </div>
+            <div className="tab-content">
+                {tabs[activeTab].content}
+            </div>
         </div>
     );
-
 };
 
 
@@ -29,7 +31,11 @@ function AboutPage() {
   // ✅ Use about namespace + fallback to "common"
   const { t } = useTranslation(["about", "common"]);
 
-const items = ['Profile', 'Settings', 'Logout'];
+    const tabs = [
+        { label: 'Tab 1', content: <div>Content of Tab 1</div> },
+        { label: 'Tab 2', content: <div>Content of Tab 2</div> },
+        { label: 'Tab 3', content: <div>Content of Tab 3</div> },
+    ];
   
   return (
     <div>
@@ -37,9 +43,9 @@ const items = ['Profile', 'Settings', 'Logout'];
       <p>{t("content")}</p>
       <p>{t("more")}</p>
 
-      <h3>Build a Dropdown Menu</h3>
+          <h3>Implement a Tabs Component</h3>
       
-          <DropdownMenu items={items } />
+          <Tabs tabs={tabs} />
            
     </div>
   );
