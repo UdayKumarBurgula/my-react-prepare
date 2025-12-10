@@ -1,30 +1,7 @@
 ﻿// src/pages/AboutPage.js
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import ReactDOM from 'react-dom';
-
-const Modal = ({ isOpen, onClose, children }) => {
-    useEffect(() => {
-        if (isOpen) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = 'auto';
-        }
-    }, [isOpen]);
-
-    if (!isOpen) return null;
-
-    return ReactDOM.createPortal(
-        <div className="modal-overlay" onClick={onClose}>
-
-            <div className="modal-content" onClick={e => e.stopPropagation()}>
-                <button className="modal-close" onClick={onClose}>Close</button>
-                {children}
-            </div>
-        </div>,
-        document.body
-    );
-};
+import { createPortal } from 'react-dom';
 
 
 
@@ -32,16 +9,17 @@ function AboutPage() {
   // ✅ Use about namespace + fallback to "common"
   const { t } = useTranslation(["about", "common"]);
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
-  
   return (
       <div>
-          <h3>Create a Modal Component</h3>
-          <button onClick={() => setIsModalOpen(true)}>Open Modal</button>
-          <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-              <h1>Modal Content</h1>
-              <p>This is the content inside the modal</p>
-          </Modal>
+          <h3>CreatePortal: Rendering to a different part of the DOM</h3>
+          <div style={{ border: '2px solid black' }}>
+              <p>This child is placed in the parent div.</p>
+              {createPortal(
+                  <p>This child is placed in the document body.</p>,
+                  document.body
+              )}
+          </div>
+          
       </div>
   );
 }
