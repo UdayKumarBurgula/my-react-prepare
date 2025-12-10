@@ -1,48 +1,34 @@
 ﻿// src/pages/AboutPage.js
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { createPortal } from 'react-dom';
 
-const Step1 = ({ next }) => (
-    <div>
-        <h2>Step 1</h2>
-        <button onClick={next}>Next</button>
-    </div>
-);
+const VirtualizedList = ({ items, itemHeight, height }) => {
+    const [scrollTop, setScrollTop] = useState(0);
+    const totalHeight = items.length * itemHeight;
+    const viewportRef = useRef(null);
 
-const Step2 = ({ next, previous }) => (
-    <div>
-        <h2>Step 2</h2>
-        <button onClick={previous}>Previous</button>
-        <button onClick={next}>Next</button>
-    </div>
-);
-
-const Step3 = ({ previous }) => (
-    <div>
-        <h2>Step 3</h2>
-        <button onClick={previous}>Previous</button>
-        <button type="submit">Submit</button>
-    </div>
-);
-
-const MultiStepForm = () => {
-    const [step, setStep] = useState(1);
-
-    const nextStep = () => setStep(step + 1);
-    const previousStep = () => setStep(step - 1);
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log('Form submitted');
+    const handleScroll = () => {
+        setScrollTop(viewportRef.current.scrollTop);
     };
 
+    const startIndex = Math.floor(scrollTop / itemHeight);
+    const endIndex = Math.min(items.length - 1, startIndex + Math.ceil(height / itemHeight));
+
+    const visibleItems = items.slice(startIndex, endIndex + 1).map((item, index) => (
+        <div key={index} style={{ height: itemHeight }}>
+            {item}
+        </div>
+    ));
+
     return (
-        <form onSubmit={handleSubmit}>
-            {step === 1 && <Step1 next={nextStep} />}
-            {step === 2 && <Step2 next={nextStep} previous={previousStep} />}
-            {step === 3 && <Step3 previous={previousStep} />}
-        </form>
+        <div ref={viewportRef} onScroll={handleScroll} style={{ height, overflowY: 'auto', position: 'relative' }}>
+            <div style={{ height: totalHeight, position: 'relative' }}>
+                <div style={{ position: 'absolute', top: startIndex * itemHeight, width: '100%' }}>
+                    {visibleItems}
+                </div>
+            </div>
+        </div>
     );
 };
 
@@ -50,12 +36,12 @@ const MultiStepForm = () => {
 function AboutPage() {
   // ✅ Use about namespace + fallback to "common"
   const { t } = useTranslation(["about", "common"]);
-  const items = ['Apple', 'Banana', 'Cherry', 'Date', 'Elderberry'];
+    const items = Array.from({ length: 1000 }, (_, i) => `Item ${i + 1}`);
 
   return (
       <div>
-          <h3>Create a Real-Time Search Filter</h3>
-          <MultiStepForm />
+          <h3>Implement a Virtualized List</h3>
+          <VirtualizedList items={items} itemHeight={50} height={400} />
       </div>
   );
 }
