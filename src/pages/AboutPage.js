@@ -3,31 +3,22 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { createPortal } from 'react-dom';
 
-const VirtualizedList = ({ items, itemHeight, height }) => {
-    const [scrollTop, setScrollTop] = useState(0);
-    const totalHeight = items.length * itemHeight;
-    const viewportRef = useRef(null);
+const Carousel = ({ images }) => {
+    const [currentIndex, setCurrentIndex] = useState(0);
 
-    const handleScroll = () => {
-        setScrollTop(viewportRef.current.scrollTop);
+    const goToNext = () => {
+        setCurrentIndex((currentIndex + 1) % images.length);
     };
 
-    const startIndex = Math.floor(scrollTop / itemHeight);
-    const endIndex = Math.min(items.length - 1, startIndex + Math.ceil(height / itemHeight));
-
-    const visibleItems = items.slice(startIndex, endIndex + 1).map((item, index) => (
-        <div key={index} style={{ height: itemHeight }}>
-            {item}
-        </div>
-    ));
+    const goToPrevious = () => {
+        setCurrentIndex((currentIndex - 1 + images.length) % images.length);
+    };
 
     return (
-        <div ref={viewportRef} onScroll={handleScroll} style={{ height, overflowY: 'auto', position: 'relative' }}>
-            <div style={{ height: totalHeight, position: 'relative' }}>
-                <div style={{ position: 'absolute', top: startIndex * itemHeight, width: '100%' }}>
-                    {visibleItems}
-                </div>
-            </div>
+        <div className="carousel">
+            <button onClick={goToPrevious}>Previous</button>
+            <img src={images[currentIndex]} alt="carousel" />
+            <button onClick={goToNext}>Next</button>
         </div>
     );
 };
@@ -36,12 +27,17 @@ const VirtualizedList = ({ items, itemHeight, height }) => {
 function AboutPage() {
   // ✅ Use about namespace + fallback to "common"
   const { t } = useTranslation(["about", "common"]);
-    const items = Array.from({ length: 1000 }, (_, i) => `Item ${i + 1}`);
+  const images = [
+        'https://unsplash.com/s/photos/flowers',
+        'https://t4.ftcdn.net/jpg/05/64/42/11/240_F_564421197_3vqtmdgdP2TgswoRbWqPeeXFX1ZBd272.jpg',
+        'https://i.pinimg.com/474x/ec/a6/da/eca6da2e377514a38db858305a71a8d2.jpg',
+    ];
+
 
   return (
       <div>
-          <h3>Implement a Virtualized List</h3>
-          <VirtualizedList items={items} itemHeight={50} height={400} />
+          <h3>Build a Carousel Component</h3>
+          <Carousel images={images} />
       </div>
   );
 }
