@@ -72,21 +72,247 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 ### commands
 npx create-react-app my-react-prepare
+
 cd my-react-prepare
+
 npm start
+
 Open http://localhost:3000 to view it in the browser.
 
+
+### ---
 npm install i18next react-i18next i18next-browser-languagedetector --legacy-peer-deps
+
 npm i i18next-http-backend --legacy-peer-deps
 
+### ---
 npm install react-router-dom --legacy-peer-deps
+
 Add new translation JSON files per page
+
 We’ll keep your existing common.json and myTranslation.json, 
+
 and add home.json and about.json for each language.
+
 Update src/i18n.js to include page namespaces, 
+
 Add "home" and "about" to your ns and keep common as defaultNS.
+
 src/App.js – combine Router + i18next + pages
 
+### ---
 Lazy loading namespaces per route (e.g., only load about namespace when visiting /about)
 
+
+add draggable
+
+npm install react-beautiful-dnd --legacy-peer-deps
+
+
+
+### ----------------------------------------------------------------------
+
+### -- code snippet 
+https://dev.to/allenarduino/live-coding-react-interview-questions-2ndh
+
+input
+------------------------------
+
+<input value={text} onChange={(e) => setText(e.target.value)} placeholder="Add a to-do" />
+
+button toggle
+------------------------------
+
+<button onClick={() => setIsOn(!isOn)}>
+
+useState for query
+------------------------------
+
+ const [query, setQuery] = useState('');
+
+ delete item
+ ------------------------------
+
+.splice(index,1)  -- is for delete 
+
+add item 
+------------------------------
+
+setTodos([...todos, { text, completed: false }])
+
+update item 
+------------------------------
+
+const newTodos = [...todos];
+newTodos[index].completed = !newTodos[index].completed;
+setTodos(newTodos);
+
+useEffect/ fetch data from API
+------------------------------
+
+ useEffect(() => {
+    fetch('https://api.example.com/data')
+      .then(response => response.json())
+      .then(data => {
+        setData(data);
+        setLoading(false);
+      });
+  }, []);
+
+  filter items
+  ------------------------------
+
+  items.filter(item =>
+    item.toLowerCase().includes(query.toLowerCase())
+  );
+
+  iterative over items
+  ------------------------------
+
+  return (
+    <ul>
+      {data.map(item => (
+        <li key={item.id}>{item.name}</li>
+      ))}
+    </ul>
+  );
+
+  iterative over items - 1
+  return (
+    <ul>
+      {data.map(item => (
+        <li key={item.id}>{item.name}</li>
+      ))}
+    </ul>
+  );
+
+  iterative over items - 2
+  ------------------------------
+
+  return (
+    <div>
+      <button onClick={() => setIsOpen(!isOpen)}>Menu</button>
+      {isOpen && (
+        <ul>
+          {items.map((item, index) => (
+            <li key={index}>{item}</li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+
+  iterative over items - 3
+  ------------------------------
+
+  return (
+    <div>
+      <div className="tab-buttons">
+        {tabs.map((tab, index) => (
+          <button
+            key={index}
+            className={index === activeTab ? 'active' : ''}
+            onClick={() => setActiveTab(index)}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+      <div className="tab-content">
+        {tabs[activeTab].content}
+      </div>
+    </div>
+  );
+
+  iterative over items - 4 Tabs
+  ------------------------------
+
+  const Tabs = ({ tabs }) => {
+  const [activeTab, setActiveTab] = useState(0);
+
+  return (
+    <div>
+      <div className="tab-buttons">
+        {tabs.map((tab, index) => (
+          <button
+            key={index}
+            className={index === activeTab ? 'active' : ''}
+            onClick={() => setActiveTab(index)}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+      <div className="tab-content">
+        {tabs[activeTab].content}
+      </div>
+    </div>
+  );
+};
+
+const App = () => {
+  const tabs = [
+    { label: 'Tab 1', content: <div>Content of Tab 1</div> },
+    { label: 'Tab 2', content: <div>Content of Tab 2</div> },
+    { label: 'Tab 3', content: <div>Content of Tab 3</div> },
+  ];
+
+  return <Tabs tabs={tabs} />;
+};
+
+
+Multstep form
+------------------------------
+
+const Step1 = ({ next }) => (
+  <div>
+    <h2>Step 1</h2>
+    <button onClick={next}>Next</button>
+  </div>
+);
+
+const Step2 = ({ next, previous }) => (
+  <div>
+    <h2>Step 2</h2>
+    <button onClick={previous}>Previous</button>
+    <button onClick={next}>Next</button>
+  </div>
+);
+
+const Step3 = ({ previous }) => (
+  <div>
+    <h2>Step 3</h2>
+    <button onClick={previous}>Previous</button>
+    <button type="submit">Submit</button>
+  </div>
+);
+
+const MultiStepForm = () => {
+  const [step, setStep] = useState(1);
+
+  const nextStep = () => setStep(step + 1);
+  const previousStep = () => setStep(step - 1);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('Form submitted');
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      {step === 1 && <Step1 next={nextStep} />}
+      {step === 2 && <Step2 next={nextStep} previous={previousStep} />}
+      {step === 3 && <Step3 previous={previousStep} />}
+    </form>
+  );
+};
+
+const App = () => {
+  return (
+    <div>
+      <h1>Multi-Step Form</h1>
+      <MultiStepForm />
+    </div>
+  );
+};
 

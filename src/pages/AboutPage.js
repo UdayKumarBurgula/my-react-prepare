@@ -1,50 +1,57 @@
 ﻿// src/pages/AboutPage.js
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback, createContext, useContext, useReducer } from "react";
 import { useTranslation } from "react-i18next";
+import { createPortal } from 'react-dom';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
+const TodoList = () => {
+    const [todos, setTodos] = useState([
+        'Learn React',
+        'Learn Redux',
+        'Build a React App',
+    ]);
 
-// Create a Search Bar
-const SearchBar = ({ items }) => {
-  const [query, setQuery] = useState('');
+    const handleOnDragEnd = (result) => {
+        if (!result.destination) return;
 
-  const filteredItems = items.filter(item =>
-    item.toLowerCase().includes(query.toLowerCase())
-  );
+        const reorderedTodos = Array.from(todos);
+        const [removed] = reorderedTodos.splice(result.source.index, 1);
+        reorderedTodos.splice(result.destination.index, 0, removed);
 
-  return (
-    <div>
-      <input
-        type="text"
-        value={query}
-        onChange={e => setQuery(e.target.value)}
-        placeholder="Search..."
-      />
-      <ul>
-        {filteredItems.map((item, index) => (
-          <li key={index}>{item}</li>
-        ))}
-      </ul>
-    </div>
-  );
+        setTodos(reorderedTodos);
+    };
+
+    return (
+        <DragDropContext onDragEnd={handleOnDragEnd}>
+            <Droppable droppableId="todos">
+                {(provided) => (
+                    <ul {...provided.droppableProps} ref={provided.innerRef}>
+                        {todos.map((todo, index) => (
+                            <Draggable key={todo} draggableId={todo} index={index}>
+                                {(provided) => (
+                                    <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                                        {todo}
+                                    </li>
+                                )}
+                            </Draggable>
+                        ))}
+                        {provided.placeholder}
+                    </ul>
+                )}
+            </Droppable>
+        </DragDropContext>
+    );
 };
-
 
 function AboutPage() {
   // ✅ Use about namespace + fallback to "common"
-  const { t } = useTranslation(["about", "common"]);
-
-  const items = ['Apple', 'Banana', 'Cherry', 'Date', 'Elderberry'];
+    const { t } = useTranslation(["about", "common"]);
 
   return (
-    <div>
-      <h2>{t("title")}</h2>
-      <p>{t("content")}</p>
-      <p>{t("more")}</p>
-
-      <h3>Create a Search Bar</h3>
-      <SearchBar items={items} />
-     
-    </div>
+      <div>
+          <h1>Build a Todo List with Drag-and-Drop</h1>
+          <TodoList />
+      </div>
   );
 }
 
