@@ -103,6 +103,15 @@ src/App.js – combine Router + i18next + pages
 ### ---
 Lazy loading namespaces per route (e.g., only load about namespace when visiting /about)
 
+
+add draggable
+
+npm install react-beautiful-dnd --legacy-peer-deps
+
+
+
+### ----------------------------------------------------------------------
+
 ### -- code snippet 
 https://dev.to/allenarduino/live-coding-react-interview-questions-2ndh
 

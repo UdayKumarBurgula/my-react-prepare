@@ -2,54 +2,55 @@
 import React, { useState, useEffect, useRef, useCallback, createContext, useContext, useReducer } from "react";
 import { useTranslation } from "react-i18next";
 import { createPortal } from 'react-dom';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
-const useFetch = (url) => {
-    const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+const TodoList = () => {
+    const [todos, setTodos] = useState([
+        'Learn React',
+        'Learn Redux',
+        'Build a React App',
+    ]);
 
-    useEffect(() => {
-        let isMounted = true;
-        fetch(url)
-            .then((response) => response.json())
-            .then((data) => {
-                if (isMounted) {
-                    setData(data);
-                    setLoading(false);
-                }
-            })
-            .catch((error) => {
-                if (isMounted) {
-                    setError(error);
-                    setLoading(false);
-                }
-            });
+    const handleOnDragEnd = (result) => {
+        if (!result.destination) return;
 
-        return () => {
-            isMounted = false;
-        };
-    }, [url]);
+        const reorderedTodos = Array.from(todos);
+        const [removed] = reorderedTodos.splice(result.source.index, 1);
+        reorderedTodos.splice(result.destination.index, 0, removed);
 
-    return { data, loading, error };
+        setTodos(reorderedTodos);
+    };
+
+    return (
+        <DragDropContext onDragEnd={handleOnDragEnd}>
+            <Droppable droppableId="todos">
+                {(provided) => (
+                    <ul {...provided.droppableProps} ref={provided.innerRef}>
+                        {todos.map((todo, index) => (
+                            <Draggable key={todo} draggableId={todo} index={index}>
+                                {(provided) => (
+                                    <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                                        {todo}
+                                    </li>
+                                )}
+                            </Draggable>
+                        ))}
+                        {provided.placeholder}
+                    </ul>
+                )}
+            </Droppable>
+        </DragDropContext>
+    );
 };
 
 function AboutPage() {
   // ✅ Use about namespace + fallback to "common"
     const { t } = useTranslation(["about", "common"]);
 
-    const { data, loading, error } = useFetch('https://jsonplaceholder.typicode.com/posts');
-
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error.message}</p>;
-
   return (
       <div>
-          <h1>Create a custom hook that fetches and caches data from an API.</h1>
-          <ul>
-              {data.map((item) => (
-                  <li key={item.id}>{item.id}. {item.title}</li>
-              ))}
-          </ul>
+          <h1>Build a Todo List with Drag-and-Drop</h1>
+          <TodoList />
       </div>
   );
 }
