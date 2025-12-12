@@ -4,42 +4,22 @@ import { useTranslation } from "react-i18next";
 import { createPortal } from 'react-dom';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
-const TodoList = () => {
-    const [todos, setTodos] = useState([
-        'Learn React',
-        'Learn Redux',
-        'Build a React App',
-    ]);
+const CountdownTimer = ({ initialSeconds }) => {
+    const [seconds, setSeconds] = useState(initialSeconds);
 
-    const handleOnDragEnd = (result) => {
-        if (!result.destination) return;
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setSeconds((prevSeconds) => prevSeconds - 1);
+        }, 1000);
 
-        const reorderedTodos = Array.from(todos);
-        const [removed] = reorderedTodos.splice(result.source.index, 1);
-        reorderedTodos.splice(result.destination.index, 0, removed);
-
-        setTodos(reorderedTodos);
-    };
+        return () => clearInterval(timer);
+    }, []);
 
     return (
-        <DragDropContext onDragEnd={handleOnDragEnd}>
-            <Droppable droppableId="todos">
-                {(provided) => (
-                    <ul {...provided.droppableProps} ref={provided.innerRef}>
-                        {todos.map((todo, index) => (
-                            <Draggable key={todo} draggableId={todo} index={index}>
-                                {(provided) => (
-                                    <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                                        {todo}
-                                    </li>
-                                )}
-                            </Draggable>
-                        ))}
-                        {provided.placeholder}
-                    </ul>
-                )}
-            </Droppable>
-        </DragDropContext>
+        <div>
+            <h1>Countdown Timer</h1>
+            <p>{seconds} seconds remaining</p>
+        </div>
     );
 };
 
@@ -49,8 +29,8 @@ function AboutPage() {
 
   return (
       <div>
-          <h1>Build a Todo List with Drag-and-Drop</h1>
-          <TodoList />
+          <h1>Create a Countdown Timer</h1>
+          <CountdownTimer initialSeconds={60} />
       </div>
   );
 }
