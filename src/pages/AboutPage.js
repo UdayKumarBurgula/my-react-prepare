@@ -3,25 +3,15 @@ import React, { useState, useEffect, useRef, useCallback, createContext, useCont
 import { useTranslation } from "react-i18next";
 import { createPortal } from 'react-dom';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 
-const CountdownTimer = ({ initialSeconds }) => {
-    const [seconds, setSeconds] = useState(initialSeconds);
+const validationSchema = Yup.object().shape({
+    username: Yup.string().required('Username is required'),
+    email: Yup.string().email('Invalid email').required('Email is required'),
+});
 
-    useEffect(() => {
-        const timer = setInterval(() => {
-            setSeconds((prevSeconds) => prevSeconds - 1);
-        }, 1000);
 
-        return () => clearInterval(timer);
-    }, []);
-
-    return (
-        <div>
-            <h1>Countdown Timer</h1>
-            <p>{seconds} seconds remaining</p>
-        </div>
-    );
-};
 
 function AboutPage() {
   // ✅ Use about namespace + fallback to "common"
@@ -29,8 +19,30 @@ function AboutPage() {
 
   return (
       <div>
-          <h1>Create a Countdown Timer</h1>
-          <CountdownTimer initialSeconds={60} />
+          <h1>Implement Formik with Yup Validation - Formik Form with Yup Validation</h1>
+          <Formik
+              initialValues={{ username: '', email: '' }}
+              validationSchema={validationSchema}
+              onSubmit={(values) => {
+                  console.log('Form Submitted', values);
+              }}
+          >
+              {() => (
+                  <Form>
+                      <div>
+                          <label>Username</label>
+                          <Field name="username" />
+                          <ErrorMessage name="username" component="div" />
+                      </div>
+                      <div>
+                          <label>Email</label>
+                          <Field name="email" type="email" />
+                          <ErrorMessage name="email" component="div" />
+                      </div>
+                      <button type="submit">Submit</button>
+                  </Form>
+              )}
+          </Formik>
       </div>
   );
 }

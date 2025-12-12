@@ -108,7 +108,11 @@ add draggable
 
 npm install react-beautiful-dnd --legacy-peer-deps
 
+formik and yup
 
+npm install formik --legacy-peer-deps
+
+npm install yup --legacy-peer-deps
 
 ### ----------------------------------------------------------------------
 
