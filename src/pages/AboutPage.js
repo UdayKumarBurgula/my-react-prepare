@@ -9,15 +9,24 @@ import { io } from "socket.io-client";
 import styles from "./Button.module.css";
 import styled from "styled-components";
 
-const Button = function ({ children }) {
-    return <button className={styles.btn}>{children}</button>;
+const useWindowWidth = function () {
+    const [width, setWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        function onResize() {
+            setWidth(window.innerWidth);
+        }
+        window.addEventListener("resize", onResize);
+        return () => window.removeEventListener("resize", onResize);
+    }, []);
+
+    return width;
 }
 
-const PrimaryButton = styled.button`
-  background: #6200ee;
-  color: white;
-  padding: 8px 12px;
-`;
+const Component = function () {
+    const width = useWindowWidth();
+    return <p >Width: {width}</p>;
+}
 
 function AboutPage() {
   // ✅ Use about namespace + fallback to "common"
@@ -25,10 +34,9 @@ function AboutPage() {
    
   return (
       <div>
-          <h1>Forms – Controlled & UncontrolledForm (React controls value):</h1>
+          <h1>Custom hooks – reusable logic:</h1>
           {t('title') + "-" + t('content')} <br />
-          <Button>Click Me!!! </Button>
-          <PrimaryButton>Click me</PrimaryButton>
+          <Component></Component>
       </div>
   );
 }
