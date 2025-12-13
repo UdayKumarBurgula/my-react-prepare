@@ -6,24 +6,17 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { io } from "socket.io-client";
-const Timer = function () {
-    const [seconds, setSeconds] = useState(0);
 
-    useEffect(() => {
-        const id = setInterval(() => setSeconds(s => s + 1), 1000);
-        return () => clearInterval(id); // cleanup
-    }, []);
+var ControlledForm = function () {
+    const [name, setName] = useState("");
 
-    return <p>{seconds}</p>;
-};
-
-const LoginButton = function () {
-    function handleClick(e) {
-        e.preventDefault();
-        alert("Logging in...");
-    }
-
-    return <button onClick={handleClick}>Login</button>;
+    return (
+        <form onSubmit={e => { e.preventDefault(); alert(name); }}>
+            Set Name
+            <input value={name} onChange={e => setName(e.target.value)} />
+            <button>Submit</button>
+        </form>
+    );
 };
 
 function AboutPage() {
@@ -32,10 +25,9 @@ function AboutPage() {
    
   return (
       <div>
-          <h1>useState program</h1>
+          <h1>Forms – Controlled (React controls value):</h1>
           {t('title') + "-" + t('content')}
-          <Timer></Timer>
-          <LoginButton></LoginButton>
+          <ControlledForm></ControlledForm>
       </div>
   );
 }
