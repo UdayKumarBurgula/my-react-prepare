@@ -481,7 +481,15 @@ useCallback → Memoizes a function
 React.memo → Memoizes a component render
 
 
-
+🧠 Comparison Table (Interview-Ready)
+--------------------------------------------------------------
+Feature	                    useMemo	                    useCallback	            React.memo
+Memoizes	                Value	                    Function	                Component
+Used in	                    Component	                Component	                Component definition
+Prevents	                Recalculation	            New function ref	        Re-render
+Returns	                    Value	                    Function	                Component
+Works alone?	            Yes	                        Usually with memo	        Needs stable props
+Dependency array	        Yes	                        Yes	                        Optional compare fn
 
 
 

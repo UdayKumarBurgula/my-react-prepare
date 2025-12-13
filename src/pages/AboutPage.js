@@ -9,72 +9,15 @@ import { io } from "socket.io-client";
 import styles from "./Button.module.css";
 import styled from "styled-components";
 
-const expensiveCalc = (n) => {
-    console.log("Calculating...");
-    return n * 2;
-};
+const Child = React.memo(({ onClick, data }) => {
+    return <button onClick={onClick}>{data.text}</button>;
+});
 
-const Example = function ({ n }) {
-    const result = useMemo(() => expensiveCalc(n), [n]); // caches result
+function Parent() {
+    const data = useMemo(() => ({ text: "Click" }), []);
+    const handleClick = useCallback(() => console.log("clicked"), []);
 
-    const handleClick = useCallback(() => {
-        console.log("Clicked");
-    }, []);
-
-    return (
-        <>
-            <p>Result: {result}</p>
-            <button onClick={handleClick}>Click</button>
-        </>
-    );
-}
-
-const WithMemo = function () {
-    const [count, setCount] = useState(0);
-    const [dark, setDark] = useState(false);
-
-    // ✅ Only recalculates when `count` changes
-    const value = useMemo(() => {
-        console.log("Calculating...");
-        let total = 0;
-        for (let i = 0; i < 1e7; i++) {
-            total += i;
-        }
-        return total + count;
-    }, [count]);
-
-    return (
-        <>
-            <p>Value: {value}</p>
-            <button onClick={() => setCount(count + 1)}>Increment</button>
-            <button onClick={() => setDark(!dark)}>Toggle Theme</button>
-        </>
-    );
-}
-
-function WithoutMemo() {
-    const [count, setCount] = useState(0);
-    const [dark, setDark] = useState(false);
-
-    // ❌ Runs on every render
-    const slowCalculation = () => {
-        console.log("Calculating...");
-        let total = 0;
-        for (let i = 0; i < 1e7; i++) {
-            total += i;
-        }
-        return total + count;
-    };
-
-    const value = slowCalculation();
-
-    return (
-        <>
-            <p>Value: {value}</p>
-            <button onClick={() => setCount(count + 1)}>Increment</button>
-            <button onClick={() => setDark(!dark)}>Toggle Theme</button>
-        </>
-    );
+    return <Child data={data} onClick={handleClick} />;
 }
 
 function AboutPage() {
@@ -85,7 +28,7 @@ function AboutPage() {
       <div>
           <h1>Custom hooks – reusable logic:</h1>
           {t('title') + "-" + t('content')} <br />
-          <WithMemo></WithMemo>
+          <Parent></Parent>
       </div>
   );
 }
