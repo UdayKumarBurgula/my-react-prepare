@@ -9,29 +9,67 @@ import { io } from "socket.io-client";
 import styles from "./Button.module.css";
 import styled from "styled-components";
 
-const TodoList = function () {
-    const [todos, setTodos] = useState([]);
-
-    useEffect(() => {
-        fetch("http://localhost:3001/todos")
-            .then(res => res.json())
-            .then(setTodos)
-            .catch(console.error);
-    }, []);
-
-    return <ul>{todos.map(t => <li key={t.id}>{t.title}</li>)}</ul>;
-}
-
-
 function AboutPage() {
-  // ✅ Use about namespace + fallback to "common"
+    // ✅ Use about namespace + fallback to "common"
     const { t } = useTranslation(["about", "common"]);
+
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [retryCount, setRetryCount] = useState(0);
+
+    const fetchData = async () => {
+        setLoading(true);
+        setError(null);
+
+        try {
+            const response = await fetch(
+                "https://jsonplaceholder.typicode.com/posts"
+            );
+
+            if (!response.ok) {
+                throw new Error("Failed to fetch data");
+            }
+
+            const result = await response.json();
+            setData(result.slice(0, 5));
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Fetch on mount & retry
+    useEffect(() => {
+        fetchData();
+    }, [retryCount]);
+
    
   return (
       <div>
           <h1>Custom hooks – reusable logic:</h1>
           {t('title') + "-" + t('content')} <br />
-          <TodoList></TodoList>
+          <h2>Async Data Fetch</h2>
+
+          {loading && <p>Loading...</p>}
+
+          {error && (
+              <div>
+                  <p style={{ color: "red" }}>Error: {error}</p>
+                  <button onClick={() => setRetryCount(c => c + 1)}>
+                      Retry
+                  </button>
+              </div>
+          )}
+
+          {!loading && !error && (
+              <ul>
+                  {data.map(post => (
+                      <li key={post.id}>{post.title}</li>
+                  ))}
+              </ul>
+          )}
       </div>
   );
 }

@@ -139,6 +139,11 @@ useState for query
 
 .splice(index,1)  -- is for delete 
 
+
+consider only few records
+--------------------------------
+.slice(0, 5)
+
 add item 
 ------------------------------
 
