@@ -449,7 +449,13 @@ useImperativeHandle	 expose custom ref API	        nothing	                     
 React.memo	         memoize component	            component	                       optimization
 
 
+- useLayoutEffect runs synchronously after DOM mutations but before the browser paints, 
+making it ideal for reading or synchronizing layout to avoid visual inconsistencies.
 
+- useMemo is used to memoize the result of expensive calculations so they don’t re-run on every render, 
+improving performance.
+
+- useCallback is used to memoize functions so they don’t get recreated on every render,
 
 
 
