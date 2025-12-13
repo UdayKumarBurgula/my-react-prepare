@@ -24,6 +24,7 @@ function AboutPage() {
   return (
       <div>
           <h1>useState program</h1>
+          {t('title') + "-" + t('content')}
           <Counter></Counter>
       </div>
   );
