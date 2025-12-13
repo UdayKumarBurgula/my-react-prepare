@@ -541,11 +541,17 @@ Interview-Ready Comparison
 -------------------------------------
 
 Feature	            useEffect	React Query
+
 Caching	            ❌	        ✅
+
 Retry	            ❌	        ✅
+
 Refetch	            Manual	    Built-in
+
 Loading	            Manual	    Built-in
+
 Error	            Manual	    Built-in
+
 Background sync	    ❌	        ✅
 
 
