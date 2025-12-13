@@ -17,6 +17,15 @@ const Timer = function () {
     return <p>{seconds}</p>;
 };
 
+const LoginButton = function () {
+    function handleClick(e) {
+        e.preventDefault();
+        alert("Logging in...");
+    }
+
+    return <button onClick={handleClick}>Login</button>;
+};
+
 function AboutPage() {
   // ✅ Use about namespace + fallback to "common"
     const { t } = useTranslation(["about", "common"]);
@@ -25,8 +34,8 @@ function AboutPage() {
       <div>
           <h1>useState program</h1>
           {t('title') + "-" + t('content')}
-
-         <Timer></Timer>
+          <Timer></Timer>
+          <LoginButton></LoginButton>
       </div>
   );
 }
