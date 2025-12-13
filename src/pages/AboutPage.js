@@ -19,15 +19,31 @@ var ControlledForm = function () {
     );
 };
 
+var UncontrolledForm = function () {
+    const inputRef = useRef();
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        alert(inputRef.current.value);
+    }
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <input ref={inputRef} />
+            <button>Submit</button>
+        </form>
+    );
+}
+
 function AboutPage() {
   // ✅ Use about namespace + fallback to "common"
     const { t } = useTranslation(["about", "common"]);
    
   return (
       <div>
-          <h1>Forms – Controlled (React controls value):</h1>
+          <h1>Forms – Controlled & UncontrolledForm (React controls value):</h1>
           {t('title') + "-" + t('content')}
-          <ControlledForm></ControlledForm>
+          <UncontrolledForm></UncontrolledForm>
       </div>
   );
 }
