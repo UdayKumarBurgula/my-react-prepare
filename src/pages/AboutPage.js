@@ -1,5 +1,5 @@
 ﻿// src/pages/AboutPage.js
-import React, { useState, useEffect, useMemo, useRef, useCallback, createContext, useContext, useReducer, useLayoutEffect } from "react";
+import React, { useState, useEffect, useMemo, Suspense, useRef, useCallback, createContext, useContext, useReducer, useLayoutEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { createPortal } from 'react-dom';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
