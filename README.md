@@ -436,24 +436,32 @@ Conditional hook calls	    Conditional logic inside hook
 🟦 QUICK SUMMARY TABLE (Interview Ready)
 -------------------------------------------
 
-Hook	             Purpose	                    Returns	                           Used For
-useState	         local state	                [value, setValue]	               UI changes
-useEffect	         side effects	                nothing	                           API calls, listeners
-useContext	         global state	                context value	                   avoid props drilling
-useMemo	             memoize values	                cached value	                   heavy calculations
-useCallback	         memoize functions	            cached function	                   stop re-renders
-useReducer	         advanced state	                [state, dispatch]	               complex logic
-useRef	             mutable ref	                ref object	                       DOM access, storing values
-useLayoutEffect	sync layout effect	                nothing	                           before painting UI
-useImperativeHandle	 expose custom ref API	        nothing	                           child → parent actions
-React.memo	         memoize component	            component	                       optimization
+Hook:	             Purpose	                    Returns	                           Used For
 
+useState:	         local state	                [value, setValue]	               UI changes
 
-- useLayoutEffect runs synchronously after DOM mutations but before the browser paints, 
-making it ideal for reading or synchronizing layout to avoid visual inconsistencies.
+useEffect:	         side effects	                nothing	                           API calls, listeners
+
+useContext:	         global state	                context value	                   avoid props drilling
+
+useMemo:	             memoize values	                cached value	                   heavy calculations
+
+useCallback:	         memoize functions	            cached function	                   stop re-renders
+
+useReducer:	         advanced state	                [state, dispatch]	               complex logic
+
+useRef:	             mutable ref	                ref object	                       DOM access, storing values
+
+useLayoutEffect:	sync layout effect	                nothing	                           before painting UI
+
+useImperativeHandle:	 expose custom ref API	        nothing	                           child → parent actions
+
+React.memo:	         memoize component	            component	                       optimization
 
 
 ------------------------------------
+- useLayoutEffect runs synchronously after DOM mutations but before the browser paints, 
+making it ideal for reading or synchronizing layout to avoid visual inconsistencies.
 
 - useMemo is used to memoize the result of expensive calculations so they don’t re-run on every render, 
 improving performance.
