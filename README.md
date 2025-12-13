@@ -320,3 +320,8 @@ const App = () => {
   );
 };
 
+socket.io-client
+-------------------
+
+npm install socket.io-client --legacy-peer-deps
+
