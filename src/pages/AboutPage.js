@@ -9,6 +9,25 @@ import { io } from "socket.io-client";
 import styles from "./Button.module.css";
 import styled from "styled-components";
 
+const expensiveCalc = (n) => {
+    console.log("Calculating...");
+    return n * 2;
+};
+
+const Example = function ({ n }) {
+    const result = useMemo(() => expensiveCalc(n), [n]); // caches result
+
+    const handleClick = useCallback(() => {
+        console.log("Clicked");
+    }, []);
+
+    return (
+        <>
+            <p>Result: {result}</p>
+            <button onClick={handleClick}>Click</button>
+        </>
+    );
+}
 
 const WithMemo = function () {
     const [count, setCount] = useState(0);
