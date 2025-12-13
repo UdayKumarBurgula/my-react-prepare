@@ -348,4 +348,36 @@ View in browser	        localhost:3000 or localhost:5173
 
 
 
+map, filter, reduce
+-----------------------------
+
+Convert number to binary
+-----------------------------
+const arr = [5, 1, 3, 2, 6];
+function binary(x) {
+  return x.toString(2); // convert number to binary
+}
+const output = arr.map(binary);
+
+
+Filter > 4 → using filter
+------------------------------
+
+const arr = [5, 1, 3, 2, 6];
+const greaterThan4 = arr.filter(x => x > 4);
+
+
+reduce : find max value in array arr.
+--------------------------------------------
+
+const max = arr.reduce(function (acc, curr) {
+  if (curr > acc) {
+    acc = curr;
+  }
+  return acc;
+}, 0); // initial value — can also use `-Infinity`
+
+console.log(max); // ✅ Output: 6
+
+
 
