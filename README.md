@@ -506,4 +506,8 @@ useCallback memoizes functions, and
 React.memo memoizes component renders to prevent unnecessary recalculations and re-renders.
 
 
+------------------------------------------------
+
+npm install -g json-server
+json-server --watch db.json --port 3001
 

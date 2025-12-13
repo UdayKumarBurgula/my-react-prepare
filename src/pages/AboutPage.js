@@ -9,16 +9,19 @@ import { io } from "socket.io-client";
 import styles from "./Button.module.css";
 import styled from "styled-components";
 
-const Child = React.memo(({ onClick, data }) => {
-    return <button onClick={onClick}>{data.text}</button>;
-});
+const TodoList = function () {
+    const [todos, setTodos] = useState([]);
 
-function Parent() {
-    const data = useMemo(() => ({ text: "Click" }), []);
-    const handleClick = useCallback(() => console.log("clicked"), []);
+    useEffect(() => {
+        fetch("http://localhost:3001/todos")
+            .then(res => res.json())
+            .then(setTodos)
+            .catch(console.error);
+    }, []);
 
-    return <Child data={data} onClick={handleClick} />;
+    return <ul>{todos.map(t => <li key={t.id}>{t.title}</li>)}</ul>;
 }
+
 
 function AboutPage() {
   // ✅ Use about namespace + fallback to "common"
@@ -28,7 +31,7 @@ function AboutPage() {
       <div>
           <h1>Custom hooks – reusable logic:</h1>
           {t('title') + "-" + t('content')} <br />
-          <Parent></Parent>
+          <TodoList></TodoList>
       </div>
   );
 }
