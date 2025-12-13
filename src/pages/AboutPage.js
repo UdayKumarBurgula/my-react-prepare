@@ -6,33 +6,10 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { io } from "socket.io-client";
+import styles from "./Button.module.css";
 
-var ControlledForm = function () {
-    const [name, setName] = useState("");
-
-    return (
-        <form onSubmit={e => { e.preventDefault(); alert(name); }}>
-            Set Name
-            <input value={name} onChange={e => setName(e.target.value)} />
-            <button>Submit</button>
-        </form>
-    );
-};
-
-var UncontrolledForm = function () {
-    const inputRef = useRef();
-
-    function handleSubmit(e) {
-        e.preventDefault();
-        alert(inputRef.current.value);
-    }
-
-    return (
-        <form onSubmit={handleSubmit}>
-            <input ref={inputRef} />
-            <button>Submit</button>
-        </form>
-    );
+const Button = function ({ children }) {
+    return <button className={styles.btn}>{children}</button>;
 }
 
 function AboutPage() {
@@ -42,8 +19,8 @@ function AboutPage() {
   return (
       <div>
           <h1>Forms – Controlled & UncontrolledForm (React controls value):</h1>
-          {t('title') + "-" + t('content')}
-          <UncontrolledForm></UncontrolledForm>
+          {t('title') + "-" + t('content')} <br />
+          <Button>Click Me!!! </Button>
       </div>
   );
 }
