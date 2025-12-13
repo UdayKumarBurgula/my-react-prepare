@@ -325,3 +325,17 @@ socket.io-client
 
 npm install socket.io-client --legacy-peer-deps
 
+language switcher
+-----------------------
+
+i18n.changeLanguage(lng);
+const { t } = useTranslation(['myTranslation']);
+return (
+    <div>
+      <h1>{t("hello")}</h1>
+      <p>{t("welcome")}</p>
+    </div>
+  );
+
+
+
