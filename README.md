@@ -492,6 +492,8 @@ Works alone?	            Yes	                        Usually with memo	        N
 Dependency array	        Yes	                        Yes	                        Optional compare fn
 
 
-
+useMemo memoizes values, 
+useCallback memoizes functions, and 
+React.memo memoizes component renders to prevent unnecessary recalculations and re-renders.
 
 
