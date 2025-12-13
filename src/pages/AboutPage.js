@@ -9,23 +9,29 @@ import { io } from "socket.io-client";
 import styles from "./Button.module.css";
 import styled from "styled-components";
 
-const useWindowWidth = function () {
-    const [width, setWidth] = useState(window.innerWidth);
+const initialState = { count: 0 };
 
-    useEffect(() => {
-        function onResize() {
-            setWidth(window.innerWidth);
-        }
-        window.addEventListener("resize", onResize);
-        return () => window.removeEventListener("resize", onResize);
-    }, []);
-
-    return width;
+function reducer(state, action) {
+    switch (action.type) {
+        case "inc":
+            return { count: state.count + 1 };
+        case "dec":
+            return { count: state.count - 1 };
+        default:
+            return state;
+    }
 }
 
-const Component = function () {
-    const width = useWindowWidth();
-    return <p >Width: {width}</p>;
+function Counter() {
+    const [state, dispatch] = useReducer(reducer, initialState);
+
+    return (
+        <>
+            <p>{state.count}</p>
+            <button onClick={() => dispatch({ type: "dec" })}>-</button>
+            <button onClick={() => dispatch({ type: "inc" })}>+</button>
+        </>
+    );
 }
 
 function AboutPage() {
@@ -36,7 +42,7 @@ function AboutPage() {
       <div>
           <h1>Custom hooks – reusable logic:</h1>
           {t('title') + "-" + t('content')} <br />
-          <Component></Component>
+          <Counter></Counter>
       </div>
   );
 }
