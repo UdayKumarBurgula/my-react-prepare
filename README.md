@@ -473,8 +473,12 @@ useMemo vs  useCallback (Quick Interview Tip)
 ----------------------------------------------
 
 useMemo	                    useCallback
+----------------------------------------------
+
 Memoizes value	            Memoizes function
+
 Returns result	            Returns function
+
 Heavy calculations	        Passing callbacks
 
 
