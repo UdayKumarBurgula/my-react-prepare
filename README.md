@@ -528,3 +528,25 @@ React.memo memoizes component renders to prevent unnecessary recalculations and 
 npm install -g json-server
 json-server --watch db.json --port 3001
 
+
+-----------------------------------------
+
+npm install @tanstack/react-query --legacy-peer-dep
+npm install @tanstack/react-query-devtools --legacy-peer-dep
+
+React Query simplifies server-state management by handling caching, retries, 
+background refetching, and error states automatically.
+
+Interview-Ready Comparison
+-------------------------------------
+
+Feature	            useEffect	React Query
+Caching	            ❌	        ✅
+Retry	            ❌	        ✅
+Refetch	            Manual	    Built-in
+Loading	            Manual	    Built-in
+Error	            Manual	    Built-in
+Background sync	    ❌	        ✅
+
+
+-------------------------------------
