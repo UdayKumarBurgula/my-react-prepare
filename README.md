@@ -416,6 +416,9 @@ console.log(output);
 
 -------------------------------------
 
+npm install styled-components --legacy-peer-dep
+
+
 
 
 
