@@ -419,6 +419,24 @@ console.log(output);
 npm install styled-components --legacy-peer-dep
 
 
+### Hooks must be called in the same order on every render.
+-------------------------------------------------------------
+React hooks must be called at the top level because React relies on the order of hook calls to correctly associate state with components. Calling hooks conditionally or in loops breaks this order.
+
+Summary Table
+❌ Not Allowed	            ✅ Allowed
+Inside if	                At top level
+Inside loops	            At top level
+Inside functions	        Inside component
+Inside callbacks	        Inside component
+Conditional hook calls	    Conditional logic inside hook
+
+------------------------------------------
+
+
+
+
+
 
 
 
