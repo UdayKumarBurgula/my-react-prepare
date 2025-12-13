@@ -6,23 +6,15 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { io } from "socket.io-client";
-const Child = function ({ value, onIncrement }) {
-    return (
-        <>
-            <p>Count: {value}</p>
-            <button onClick={onIncrement}>+1</button>
-        </>
-    );
-};
+const Timer = function () {
+    const [seconds, setSeconds] = useState(0);
 
-const Parent = function () {
-    const [count, setCount] = useState(0);
-    return (
-        <Child
-            value={count}
-            onIncrement={() => setCount(count + 1)}
-        />
-    );
+    useEffect(() => {
+        const id = setInterval(() => setSeconds(s => s + 1), 1000);
+        return () => clearInterval(id); // cleanup
+    }, []);
+
+    return <p>{seconds}</p>;
 };
 
 function AboutPage() {
@@ -34,7 +26,7 @@ function AboutPage() {
           <h1>useState program</h1>
           {t('title') + "-" + t('content')}
 
-          <Parent></Parent>
+         <Timer></Timer>
       </div>
   );
 }
