@@ -337,5 +337,15 @@ return (
     </div>
   );
 
+Summary Table
+---------------
+Step	Command / Action
+Create App	            npx create-react-app my-i18n-app
+Install i18n	        npm install i18next react-i18next ...
+Add code & JSON files	src/i18n.js, translation files
+Run app	                npm start or npm run dev
+View in browser	        localhost:3000 or localhost:5173
+
+
 
 
