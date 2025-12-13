@@ -379,5 +379,43 @@ const max = arr.reduce(function (acc, curr) {
 
 console.log(max); // ✅ Output: 6
 
+You Now Know:
+-----------------
+
+✔ .map() → Transform array
+✔ .filter() → Filter values
+✔ .reduce() → Sum / Max / Any single result
+✔ DRY Principle + Higher Order Functions ✔
+
+filter + map OR reduce + map
+-------------------------------
+const users = [
+  { firstName: "akshay", lastName: "saini", age: 26 },
+  { firstName: "donald", lastName: "trump", age: 75 },
+  { firstName: "elon", lastName: "musk", age: 50 },
+  { firstName: "deepika", lastName: "padukone", age: 26 }
+];
+
+// ["akshay", "deepika"]
+const output = users
+  .filter((x) => x.age < 30)
+  .map((x) => x.firstName);
+
+console.log(output);
+
+--------------------------------------
+
+const output = users.reduce((acc, user) => {
+  if (user.age < 30) {
+    acc.push(user.firstName);
+  }
+  return acc;
+}, []);
+
+console.log(output);
+
+-------------------------------------
+
+
 
 
