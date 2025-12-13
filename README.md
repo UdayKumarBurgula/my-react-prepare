@@ -485,17 +485,17 @@ React.memo → Memoizes a component render
 --------------------------------------------------------------
 Feature	                    useMemo	                    useCallback	            React.memo
 
-Memoizes	                Value	                    Function	                Component
+Memoizes:	                Value	                    Function	                Component
 
-Used in	                    Component	                Component	                Component definition
+Used in:                    Component	                Component	                Component definition
 
-Prevents	                Recalculation	            New function ref	        Re-render
+Prevents:                   Recalculation	            New function ref	        Re-render
 
-Returns	                    Value	                    Function	                Component
+Returns:                    Value	                    Function	                Component
 
-Works alone?	            Yes	                        Usually with memo	        Needs stable props
+Works alone?:	            Yes	                        Usually with memo	        Needs stable props
 
-Dependency array	        Yes	                        Yes	                        Optional compare fn
+Dependency array:	        Yes	                        Yes	                        Optional compare fn
 
 -------------------------------------------------------------
 
